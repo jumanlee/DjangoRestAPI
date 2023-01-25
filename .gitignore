@@ -78,6 +78,9 @@ venv.bak/
 # mkdocs documentation 
 /site 
 
+#ignore csv files
+# *.csv
+
 # mypy 
 .mypy_cache/ 
 
