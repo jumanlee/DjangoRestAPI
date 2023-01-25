@@ -1,6 +1,6 @@
 # Introduction
 
-This project is to implement REST API endpoints for bioscience researchers who are working on protein domains. The API allows the researchers to regularly query for the data they've generated. The API endpoints specification and data are explained further in below sections. All the bioscience data is stored in the three csv files, which the python script that I have written will transfer all into the default sqlite database. This will happen after you run the migration and then the python script, explained in the next section. Note that this project is my completed mid-term project for my web development module at the University of London. 
+This project involves the implmenetation of REST API endpoints for bioscience researchers working on protein domains. The API allows the researchers to regularly query for the data they've generated. The API endpoints specification and data are explained further in below sections. All the bioscience data is stored in the three csv files, which the python script that I have written will transfer all into the default sqlite database. This will happen after you run the migration and then the python script, explained in the next section. Note that this project is my completed mid-term project for my web development module at the University of London.
 
 # Instructions
 
@@ -16,23 +16,23 @@ At the root of the directory: <br />
 
 # Data explanation
 
-Organisms are classified using a system of Taxonomy. Each organism is assigned a Genus and Species name and the NCBI Taxonomy Database assigns a single integer number as an ID value for each species. In summary, the relationships between the different sets of data are described as: <br />
+Organisms are categorised using Taxonomy, which assigns them a Genus and Species name and assigns a unique ID number to each species through the NCBI Taxonomy Database. In summary, the relationships between the different sets of data are described as: <br />
 
-Organisms HAVE MANY Proteins <br />
-Organisms HAVE A Genus name <br />
-Organisms HAVE A Species name <br />
-Proteins HAVE MANY domains <br />
-Proteins HAVE ONE sequence <br />
-Domains HAVE ONE pfam domain ID <br />
+Organisms have multiple Proteins <br />
+Organisms have a Genus name <br />
+Organisms have a Species name <br />
+Proteins have multiple domains <br />
+Proteins have a single sequence <br />
+Domains have a single Pfam domain ID <br />
 
-The relationships form the basis of how the tables are designed e.g. what the primary_key and foreign_key relationships are and what goes into what tables. <br />
+The relationships between the various data sets form the foundation for the design of the tables, including the identification of primary and foreign key relationships and the allocation of data to specific tables. <br />
 
-proteinsequence.csv contains protein animo acid sequences. Each record consists of two columns. The first column is the Protein ID and the second column is the protein sequence in single letter code. The longest sequence is just less than 40,000 characters long. Not all proteins in the data set have sequences: <br />
+The file proteinsequence.csv contains the amino acid sequences of proteins, wherein each record is composed of two columns. The first column represents the Protein ID, and the second column includes the sequence of the protein in single letter code. The maximum length of the sequences present in the dataset is slightly less than 40,000 characters. Note that not all proteins in the dataset are accompanied by sequences. <br />
 
 protein ID <br />
 Protein Sequence <br />
 
-proteinorganism.csv contains domain annotations. Each row is the data for a Protein Domain assigned to a different Protein. There are 10,000 records in this file. The columns are: <br />
+The proteinorganism.csv file contains annotations of protein domains. Each row represents a Protein Domain assigned to a different Protein, and there are 10,000 records in total. The columns in the file are: <br />
 
 Protein ID, <br />
 Organism TAXA ID, <br />
@@ -45,7 +45,7 @@ Domain End Coordinate <br />
 Length of Protein <br />
 
 
-pfam.csv has two columns: <br />
+The pfam.csv file has two columns: <br />
 
 Domain/Pfam IDs <br />
 Domain/Pfam Family description <br />
