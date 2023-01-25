@@ -55,6 +55,7 @@ Domain/Pfam Family description <br />
 
 REST Specification: <br />
 
+`````
 POST http://127.0.0.1:8080/api/protein/ - add a new record 
 GET  http://127.0.0.1:8080/api/protein/[PROTEIN ID] - return the protein sequence and all we know about it
 http://127.0.0.1:8080/api/protein/A0A016S8J7 returns 
@@ -244,3 +245,4 @@ http://127.0.0.1:8080/api/pfams/55661 returns
 GET  http://127.0.0.1:8080/api/coverage/[PROTEIN ID] - return the domain coverage for a given protein. That is Sum of the protein domain lengths (start-stop)/length of protein. 
 http://127.0.0.1:8080/api/coverage/A0A016S8J7 returns 
 coverage:	0.693069306930693
+`````
