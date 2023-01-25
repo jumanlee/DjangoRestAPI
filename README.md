@@ -6,59 +6,59 @@ This project is to implement REST API endpoints for bioscience researchers who a
 
 First, to launch the web service on your machine, you will need to do the following: 
 
-At the root of the directory:
-1) (For MacOS) Create a virtual environment by running: python3 -m venv <your environment name> 
-2) (For MacOS) Switch to the virtual environment by running: source <your environment name>/bin/activate
-3) To install all the dependencies, run: pip install -r requirements.txt 
-4) Run migration: python manage.py migrate
-5) Run the python script to transfer csv file data to sqlite, this will take a few minutes due to large data volume: python scripts/populate_data.py 
-6) Then you can start the server: python manage.py runserver 127.0.0.1:8080 
+At the root of the directory: <br />
+1) (For MacOS) Create a virtual environment by running: python3 -m venv <your environment name> <br />
+2) (For MacOS) Switch to the virtual environment by running: source <your environment name>/bin/activate <br />
+3) To install all the dependencies, run: pip install -r requirements.txt  <br />
+4) Run migration: python manage.py migrate <br />
+5) Run the python script to transfer csv file data to sqlite, this will take a few minutes due to large data volume: python scripts/populate_data.py  <br />
+6) Then you can start the server: python manage.py runserver 127.0.0.1:8080 <br />
 
 # Data explanation
 
-Organisms are classified using a system of Taxonomy. Each organism is assigned a Genus and Species name and the NCBI Taxonomy Database assigns a single integer number as an ID value for each species. In summary, the relationships between the different sets of data are described as: 
+Organisms are classified using a system of Taxonomy. Each organism is assigned a Genus and Species name and the NCBI Taxonomy Database assigns a single integer number as an ID value for each species. In summary, the relationships between the different sets of data are described as: <br />
 
-Organisms HAVE MANY Proteins
-Organisms HAVE A Genus name
-Organisms HAVE A Species name
-Proteins HAVE MANY domains
-Proteins HAVE ONE sequence
-Domains HAVE ONE pfam domain ID
+Organisms HAVE MANY Proteins <br />
+Organisms HAVE A Genus name <br />
+Organisms HAVE A Species name <br />
+Proteins HAVE MANY domains <br />
+Proteins HAVE ONE sequence <br />
+Domains HAVE ONE pfam domain ID <br />
 
-The relationships form the basis of how the tables are designed e.g. what the primary_key and foreign_key relationships are and what goes into what tables. 
+The relationships form the basis of how the tables are designed e.g. what the primary_key and foreign_key relationships are and what goes into what tables. <br />
 
-proteinsequence.csv contains protein animo acid sequences. Each record consists of two columns. The first column is the Protein ID and the second column is the protein sequence in single letter code. The longest sequence is just less than 40,000 characters long. Not all proteins in the data set have sequences:
+proteinsequence.csv contains protein animo acid sequences. Each record consists of two columns. The first column is the Protein ID and the second column is the protein sequence in single letter code. The longest sequence is just less than 40,000 characters long. Not all proteins in the data set have sequences: <br />
 
-protein ID
-Protein Sequence
+protein ID <br />
+Protein Sequence <br />
 
-proteinorganism.csv contains domain annotations. Each row is the data for a Protein Domain assigned to a different Protein. There are 10,000 records in this file. The columns are:
+proteinorganism.csv contains domain annotations. Each row is the data for a Protein Domain assigned to a different Protein. There are 10,000 records in this file. The columns are: <br />
 
-Protein ID,
-Organism TAXA ID,
-Organism Clade Idenitifer
-Organism Scientific name ("Genus Species")
-Domain description
-Domain ID
-Domain Start Coordinate
-Domain End Coordinate
-Length of Protein
+Protein ID, <br />
+Organism TAXA ID, <br />
+Organism Clade Idenitifer <br />
+Organism Scientific name ("Genus Species") <br />
+Domain description <br />
+Domain ID <br />
+Domain Start Coordinate <br />
+Domain End Coordinate <br />
+Length of Protein <br />
 
 
-pfam.csv has two columns:
+pfam.csv has two columns: <br />
 
-Domain/Pfam IDs
-Domain/Pfam Family description
+Domain/Pfam IDs <br />
+Domain/Pfam Family description <br />
 
 
 # API endpoints specification
 
-REST Specification:
+REST Specification: <br />
 
-POST http://127.0.0.1:8000/api/protein/ - add a new record
-GET  http://127.0.0.1:8000/api/protein/[PROTEIN ID] - return the protein sequence and all we know about it
-http://127.0.0.1:8000/api/protein/A0A016S8J7 returns
-```{
+POST http://127.0.0.1:8080/api/protein/ - add a new record <br />
+GET  http://127.0.0.1:8080/api/protein/[PROTEIN ID] - return the protein sequence and all we know about it
+http://127.0.0.1:8080/api/protein/A0A016S8J7 returns <br />
+`````{
     "protein_id": "A0A016S8J7",
     "sequence": "MVIGVGFLLVLFSSSVLGILNAGVQLRIEELFDTPGHTNNWAVLVCTSRFWFNYRHVSNVLALYHTVKRLGIPDSNIILMLAEDVPCNPRNPRPEAAVLSA",
     "taxonomy": {
@@ -88,19 +88,19 @@ http://127.0.0.1:8000/api/protein/A0A016S8J7 returns
             "stop": 39
         }
     ]
-}```
+}`````
 
-GET  http://127.0.0.1:8000/api/pfam/[PFAM ID] - return the domain and it's deacription
-http://127.0.0.1:8000/api/pfam/PF00360 returns
-```{
+GET  http://127.0.0.1:8080/api/pfam/[PFAM ID] - return the domain and it's deacription
+http://127.0.0.1:8080/api/pfam/PF00360 returns <br />
+`````{
     "domain_id": "PF00360",
     "domain_description": "Phytochromeregion"
-}```
+}`````
 
-GET  http://127.0.0.1:8000/api/proteins/[TAXA ID] - return a list of all proteins for a given organism
+GET  http://127.0.0.1:8080/api/proteins/[TAXA ID] - return a list of all proteins for a given organism
 NOTE: "id" here is sequential the primary key value generated by django for the table that holds the domain data
-http://127.0.0.1:8000/api/proteins/55661 returns
-```[
+http://127.0.0.1:8080/api/proteins/55661 returns <br />
+`````[
     {
         "id": 88766,
         "protein_id": "A0A091FY39"
@@ -149,12 +149,12 @@ http://127.0.0.1:8000/api/proteins/55661 returns
         "id": 88772,
         "protein_id": "A0A091GY85"
     }
-]```
+]`````
 
-GET  http://127.0.0.1:8000/api/pfams/[TAXA ID] - return a list of all domains in all the proteins for a given organism.
+GET  http://127.0.0.1:8080/api/pfams/[TAXA ID] - return a list of all domains in all the proteins for a given organism. <br />
 NOTE: "id" here is sequential the primary key value generated by django for the table that holds the domain data
-http://127.0.0.1:8000/api/pfams/55661 returns
-```[
+http://127.0.0.1:8080/api/pfams/55661 returns <br />
+`````[
     {
         "id": 88896,
         "pfam_id": {
@@ -239,8 +239,8 @@ http://127.0.0.1:8000/api/pfams/55661 returns
             "domain_description": "C4-typezinc-fingerofDNApolymerasedelta"
         }
     }
-]```
+]`````
 
-GET  http://127.0.0.1:8000/api/coverage/[PROTEIN ID] - return the domain coverage for a given protein. That is Sum of the protein domain lengths (start-stop)/length of protein.
-http://127.0.0.1:8000/api/coverage/A0A016S8J7 returns
-```coverage:	0.693069306930693```
+GET  http://127.0.0.1:8080/api/coverage/[PROTEIN ID] - return the domain coverage for a given protein. That is Sum of the protein domain lengths (start-stop)/length of protein. <br />
+http://127.0.0.1:8080/api/coverage/A0A016S8J7 returns <br />
+`````coverage:	0.693069306930693`````
